@@ -1,5 +1,5 @@
 <?php
-//Default Configuration.
+//Default Configuration. CONFIG_THIS "lang": "zh-CN" and "en" are available.
 $CONFIG = '{"lang":"zh-CN","error_reporting":false,"show_hidden":true,"hide_Cols":true,"calc_folder":false}';
 
 //Remain the $CONFIG on the third line. It is hardcoded because of my laziness!
@@ -114,7 +114,7 @@ define('MAX_UPLOAD_SIZE', '65536');
 
 //--- EDIT BELOW CAREFULLY OR DO NOT EDIT AT ALL
 
-// private key and session name to store to the session
+// private key and session name to store to the session PLEASE DO NOT CHANGE account.php depends on it
 if ( !defined( 'FM_SESSION_ID')) {
     define('FM_SESSION_ID', 'filemanager');
 }
@@ -2980,7 +2980,7 @@ function fm_show_nav_path($path)
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink-5">
                             <?php /*if (!FM_READONLY): ?>
                             <a title="<?php echo lng('Settings') ?>" class="dropdown-item nav-link" href="?p=<?php echo urlencode(FM_PATH) ?>&amp;settings=1"><i class="fa fa-cog" aria-hidden="true"></i> <?php echo lng('Settings') ?></a>
-                            <?php endif*/ //CONFIG_THIS  ?>
+                            <?php endif*/ //CONFIG_THIS setting disabled by default, enable as required  ?>
 							<a title="<?php echo lng('ChangePassword') ?>" class="dropdown-item nav-link" href="account.php?web=change"><i class="fa fa-key" aria-hidden="true"></i> <?php echo lng('ChangePassword') ?></a>
                             <a title="<?php echo lng('Help') ?>" class="dropdown-item nav-link" href="?p=<?php echo urlencode(FM_PATH) ?>&amp;help=2"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> <?php echo lng('Help') ?></a>
                             <a title="<?php echo lng('Logout') ?>" class="dropdown-item nav-link" href="?logout=1"><i class="fa fa-sign-out" aria-hidden="true"></i> <?php echo lng('Logout') ?></a>

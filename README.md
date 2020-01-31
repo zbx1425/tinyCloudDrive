@@ -2,6 +2,9 @@
 
 由 [Tiny File Manager](https://tinyfilemanager.github.io/) 魔改而来的 _较为_ 轻量化的PHP多用户注册制云存储平台套件
 
+![Preview Image](https://github.com/zbx1425/tinyCloudDrive/raw/master/screenshot.png)
+
+![Preview Image](https://github.com/prasathmani/tinyfilemanager/raw/master/screenshot.gif)
 
 
 ## 安装
