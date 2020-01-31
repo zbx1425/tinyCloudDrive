@@ -1325,19 +1325,20 @@ if (isset($_GET['help'])) {
             <div class="card-body">
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <p><h3><a href="https://github.com/prasathmani/tinyfilemanager" target="_blank" class="app-v-title"> Tiny File Manager <?php echo VERSION; ?></a></h3></p>
-                        <p>Author: Prasath Mani</p>
-                        <p>Mail Us: <a href="mailto:ccpprogrammers@gmail.com">ccpprogrammers[at]gmail.com</a> </p>
+						<p><h3><a href="https://github.com/zbx1425/tinyclouddrive" target="_blank" class="app-v-title" style="margin-bottom:0"><b>Tiny Cloud Drive</b></a></h3></p>
+                        <p><a href="https://github.com/prasathmani/tinyfilemanager" target="_blank" class="app-v-title" style="font-size:1.3em;margin-top:0">Tiny File Manager <?php echo VERSION; ?></a></p>
+                        <p>Author: Prasath Mani&nbsp;&nbsp;&nbsp;&nbsp;Modified by: zbx1425</p>
+                        <p>Mail Us: <a href="mailto:ccpprogrammers@gmail.com">ccpprogrammers[at]gmail.com</a> <a href="mailto:zbx1425@outlook.com">zbx1425[at]outlook.com</a> </p>
                     </div>
                     <div class="col-xs-12 col-sm-6">
                         <div class="card">
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item"><a href="https://tinyfilemanager.github.io/" target="_blank"><i class="fa fa-question-circle"></i> <?php echo lng('Help Documents') ?> </a> </li>
                                 <li class="list-group-item"><a href="https://github.com/prasathmani/tinyfilemanager/issues" target="_blank"><i class="fa fa-bug"></i> <?php echo lng('Report Issue') ?></a></li>
-                                <li class="list-group-item"><a href="javascript:latest_release_info('<?php echo VERSION; ?>');" target="_blank"><i class="fa fa-link"> </i> <?php echo lng('Check Latest Version') ?></a></li>
+                                <!--<li class="list-group-item"><a href="javascript:latest_release_info('<?php echo VERSION; ?>');" target="_blank"><i class="fa fa-link"> </i> <?php echo lng('Check Latest Version') ?></a></li>
                                 <?php if(!FM_READONLY) { ?>
                                 <li class="list-group-item"><a href="javascript:show_new_pwd();" target="_blank"><i class="fa fa-lock"></i> <?php echo lng('Generate new password hash') ?></a></li>
-                                <?php } ?>
+                                <?php } ?>-->
                             </ul>
                         </div>
                     </div>
