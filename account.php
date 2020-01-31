@@ -1,6 +1,7 @@
 <?php
 //请编辑 CONFIG_THIS 所表示的字段。
-$lang = json_decode(explode("'",file("index.php")[2])[1],true)["lang"]; //Ungraceful Magic.
+$lang = json_decode(explode("'",file("index.php")[2])[1],true)["lang"]; //Ungraceful but used for performance.
+$encryptMagic = array(0x12, 0x34, 0x56); //Replace these magic numbers for security measure! Use at least three of them!
 $enableEmail = false; //CONFIG_THIS
 if ($enableEmail){
 	$smtpsevraddr = "smtp-mail.outlook.com";
@@ -65,13 +66,10 @@ if (basename(__FILE__) == basename($_SERVER["SCRIPT_FILENAME"])) {
 					header("location: account.php?web=signup&err=ConflictName"); exit;
 				}
 				$data = $_POST["fm_usr"].chr(1).password_hash($_POST["fm_pwd"], PASSWORD_DEFAULT).chr(1).md5($_POST["fm_usr"]);
-				$data = strxor($data, 0x89);
-				$data = strrev($data);
-				$data = base64_encode($data);
-				$data = strxor($data, 0x64);
-				$data = strrev($data);
-				$data = base64_encode($data);
-				$token_url = "https://".$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']."?act=reg&token=".$data;
+				foreach ($encryptMagic as $magic){
+					$data = base64_encode(strrev(strxor($data, $magic)));
+				}
+				$token_url = "https://".$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']."?act=reg&token=".urlencode($data);
 				if ($enableEmail){
 					$contentdata = str_replace(array("{{USER_NAME}}", "{{TOKEN_URL}}", "{{SEND_DATE}}"),
 						array($_POST["fm_usr"], $token_url, date("Y-m-d",time())), $smtpmailcontent);
@@ -131,12 +129,10 @@ if (basename(__FILE__) == basename($_SERVER["SCRIPT_FILENAME"])) {
 				if (!isset($_GET["token"])){
 					header("location: account.php?web=signup&err=InvalidToken"); exit;
 				}
-				$data = base64_decode($_GET["token"]);
-				$data = strrev($data);
-				$data = strxor($data, 0x64);
-				$data = base64_decode($data);
-				$data = strrev($data);
-				$data = strxor($data, 0x89);
+				$data = $_GET["token"];
+				foreach (array_reverse($encryptMagic) as $magic){
+					$data = strxor(strrev(base64_decode($data)), $magic);
+				}
 				$data = explode(chr(1),$data);
 				if (md5($data[0]) != $data[2]){
 					header("location: account.php?web=signup&err=InvalidToken"); exit;

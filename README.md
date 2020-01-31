@@ -59,6 +59,10 @@ If you need to send emails by SMTP for user registration, please download and in
 
 If you are using sendmail services instead of SMTP, please config according to the documentation of your service provider, and replace line 77~108 accordingly.
 
+**如需使用Email验证，请立刻修改`account.php`中第4行的`$encryptMagic`数组！请使用三个及以上随意数值替换默认数值，否则不怀好意者可伪造报文越过Email校验！**
+
+**If you intend to use email validation, please REPLACE THE `$encryptMagic` ARRAY IN `account.php` AT LINE 4 IMMEDIATELY! Please use three or more random number to replace the default ones, otherwise some badass would be able to fake a link and bypass the validation!**
+
 为尽可能使配置轻量化，本套件不使用数据库，用户数据直接存储于`account.json`中。如需使用数据库，请根据您使用的数据库软件修改`account.php`中`readUsers()`和`writeUsers($raw)`函数。
 
 Tiny File Manager的`$auth_users `与 `$directories_users`已由本套件自动配置，不能人工修改。
