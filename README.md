@@ -1,6 +1,6 @@
 # Tiny Cloud Drive
 
-由 [Tiny File Manager][ https://tinyfilemanager.github.io/ ] 魔改而来的 _较为_ 轻量化的PHP多用户注册制云存储平台套件
+由 [Tiny File Manager](https://tinyfilemanager.github.io/) 魔改而来的 _较为_ 轻量化的PHP多用户注册制云存储平台套件
 
 
 
@@ -29,7 +29,7 @@
 
 您可在两份php文件中查找  `CONFIG_THIS` 字样，以将相应内容替换为您站点的内容。
 
-如果您需要发送Email进行用户验证，请您自行下载安装 [PHPMailer][ https://github.com/PHPMailer/PHPMailer ] 库，并相应调整 `account.php` 第4~23行：
+如果您需要发送Email进行用户验证，请您自行下载安装 [PHPMailer](https://github.com/PHPMailer/PHPMailer) 库，并相应调整 `account.php` 第4~23行：
 
 ```php
 /*   4 */ $enableEmail = true; //CONFIG_THIS
