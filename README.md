@@ -33,9 +33,9 @@ A lightweight multi-user registerable PHP cloud storage website kit based on [Ti
 
 ### 安装 Installation
 
-直接将  `index.php` `account.php` `translation.json ` 放置在您的服务器即可。**请勿重命名上述三个文件。**
+直接将  `index.php` `account.php` `translation.json account.json ` 放置在您的服务器即可。**请勿重命名上述文件。**
 
-Install the kit by placing `index.php` `account.php` `translation.json ` to your web server at where you would like. **Do not rename these scripts.**
+Install the kit by placing `index.php` `account.php` `translation.json` `account.json` to your web server at where you would like. **Do not rename these scripts.**
 
 要进行配置，您可在`index.php` `account.php`中查找  `CONFIG_THIS` 字样，并编辑相应内容。
 
@@ -111,4 +111,4 @@ location ~ ^/[PATH_TO_INSTALLATION]/.+/.+\.php$ {
 
 ## 授权协议
 
-按基础项目Tiny File Manager要求，本项目由GPLv3授权。 请参照 [LICENSE.md]( https://github.com/zbx1425/tinyCloudDrive/blob/master/LICENSE ) 了解更多细节。 
+按基础项目Tiny File Manager要求，本项目由GPLv3授权。 请参照 [LICENSE]( https://github.com/zbx1425/tinyCloudDrive/blob/master/LICENSE ) 了解更多细节。 
