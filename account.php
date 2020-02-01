@@ -24,10 +24,6 @@ EOF;
 	require_once "phpmailer/PHPMailerAutoload.php"; //CONFIG_THIS
 }
 
-session_cache_limiter('');
-session_name("filemanager");
-session_start();
-
 function readUsers(){
 	return json_decode(file_get_contents("account.json"), true);
 }
@@ -49,6 +45,9 @@ function writeUsers($raw){
 }
 
 if (basename(__FILE__) == basename($_SERVER["SCRIPT_FILENAME"])) {
+	session_cache_limiter('');
+	session_name("filemanager");
+	session_start();
 	if (isset($_GET["act"])){
 		switch ($_GET["act"]){
 			case "rtoken":

@@ -1383,7 +1383,7 @@ if (isset($_GET['view'])) {
         fm_show_nav_path(FM_PATH); // current path
     }
 
-    $file_url = FM_ROOT_URL . fm_convert_win((FM_PATH != '' ? '/' . FM_PATH : '') . '/' . $file);
+    $file_url =  fm_convert_win((FM_PATH != '' ? '/' . FM_PATH : '') . '/' . $file);
     $file_path = $path . '/' . $file;
 
     $ext = strtolower(pathinfo($file_path, PATHINFO_EXTENSION));
