@@ -79,13 +79,16 @@ Tiny File Manager的`$auth_users `与 `$directories_users`已由本套件自动�
 
 ## 部署方法
 
-为避免上传CGI脚本造成的任意代码执行，您应当配置服务器以关闭**本套件安装目录之子目录**的CGI脚本执行。
+为避免上传CGI脚本造成的任意代码执行，您应当配置服务器以关闭**本套件安装目录之子目录**的CGI脚本执行，及避免配置文件被直接读取。
 
-配置内容（以nginx.conf为例，在server一节增加以下内容）:
+配置内容（以nginx之.conf为例，在server一节增加以下内容）:
 
 ```
 location ~ ^\..*/.*\.php$ {
-    return 403;
+    deny all;
+}
+location ~ ^/[PATH_TO_INSTALLATION]/.+\.json$ {
+    deny all;
 }
 location ~ ^/[PATH_TO_INSTALLATION]/.+/.+\.php$ {
 
