@@ -108,7 +108,7 @@ location ~ ^/[PATH_TO_INSTALLATION]/.+/.+\.php$ {
 
 ## 关于作者
 
-- zbx1425 - [zbx1425.tk](https://zbx1425.tk) - [zbx1425@outlook.com](mailto:zbx1425@outlook.com)
+- zbx1425 - [zbx1425.cn](https://www.zbx1425.cn) - [support@zbx1425.cn](mailto:support@zbx1425.cn)
 
 
 

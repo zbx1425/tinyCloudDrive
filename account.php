@@ -1,9 +1,9 @@
 <?php
 //请编辑 CONFIG_THIS 所表示的字段。
-$lang = json_decode(explode("'",file("index.php")[2])[1],true)["lang"]; //Ungraceful but used for performance.
-$encryptMagic = array(0x12, 0x34, 0x56); //Replace these magic numbers for security measure! Use at least three of them!
+$lang = json_decode(explode("'",file("index.php")[2])[1],true)["lang"]; // Ungraceful
+$encryptMagic = "CONFIG_THIS_REPLACE_ME"; // Replace this key.
 $enableEmail = false; //CONFIG_THIS
-if ($enableEmail){
+if ($enableEmail) {
 	$smtpsevraddr = "smtp-mail.outlook.com";
 	$smtpsevrport = 587;
 	$smtpusername = "CONFIG_THIS@outlook.com";
@@ -23,6 +23,8 @@ if ($enableEmail){
 EOF;
 	require_once "phpmailer/PHPMailerAutoload.php"; //CONFIG_THIS
 }
+
+define("ENABLE_SETTINGS", true); // CONFIG_THIS
 
 function readUsers(){
 	return json_decode(file_get_contents("account.json"), true);
@@ -65,10 +67,17 @@ if (basename(__FILE__) == basename($_SERVER["SCRIPT_FILENAME"])) {
 					header("location: account.php?web=signup&err=ConflictName"); exit;
 				}
 				$data = $_POST["fm_usr"].chr(1).password_hash($_POST["fm_pwd"], PASSWORD_DEFAULT).chr(1).md5($_POST["fm_usr"]);
-				foreach ($encryptMagic as $magic){
-					$data = base64_encode(strrev(strxor($data, $magic)));
+				$data = aesEncrypt($encryptMagic, $data);
+				if (isset($_SERVER['HTTPS']) &&
+						($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1) ||
+						isset($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
+						$_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+					$protocol = 'https://';
 				}
-				$token_url = "https://".$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']."?act=reg&token=".urlencode($data);
+				else {
+					$protocol = 'http://';
+				}
+				$token_url = $protocol.$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']."?act=reg&token=".urlencode($data);
 				if ($enableEmail){
 					$contentdata = str_replace(array("{{USER_NAME}}", "{{TOKEN_URL}}", "{{SEND_DATE}}"),
 						array($_POST["fm_usr"], $token_url, date("Y-m-d",time())), $smtpmailcontent);
@@ -129,9 +138,7 @@ if (basename(__FILE__) == basename($_SERVER["SCRIPT_FILENAME"])) {
 					header("location: account.php?web=signup&err=InvalidToken"); exit;
 				}
 				$data = $_GET["token"];
-				foreach (array_reverse($encryptMagic) as $magic){
-					$data = strxor(strrev(base64_decode($data)), $magic);
-				}
+				$data = aesDecrypt($encryptMagic, $data);
 				$data = explode(chr(1),$data);
 				if (md5($data[0]) != $data[2]){
 					header("location: account.php?web=signup&err=InvalidToken"); exit;
@@ -341,12 +348,22 @@ function deleteDir($dirPath) {
     rmdir($dirPath);
 }
 
-function strxor($str, $key){
-	$out="";
-	for($i=0;$i<strlen($str);$i++){
-		$out.=$str[$i]^chr($key);
-	}
-	return $out;
+function aesEncrypt($key, $plaintext){
+	$key = substr(sha1($key, true), 0, 32);
+	$iv = random_bytes(16);
+	$ciphertext = openssl_encrypt($plaintext, 'aes-256-cbc', $key, OPENSSL_RAW_DATA, $iv);
+	$ivCiphertext = $iv . $ciphertext;
+	$ivCiphertextB64 = base64_encode($ivCiphertext);
+	return $ivCiphertextB64;
+}
+
+function aesDecrypt($key, $ivCiphertextB64){
+	$key = substr(sha1($key, true), 0, 32);
+	$ivCiphertext  = base64_decode($ivCiphertextB64);
+	$iv = substr($ivCiphertext, 0, 16);
+	$ciphertext = substr($ivCiphertext, 16);
+	$decryptedData = openssl_decrypt($ciphertext, "aes-256-cbc", $key, OPENSSL_RAW_DATA, $iv); 
+	return $decryptedData;
 }
 
 function zbx_show_message()
@@ -463,7 +480,7 @@ global $lang, $root_url, $favicon_path;
 	?>
 							<div class="footer text-center">
 							&mdash;&mdash; &copy;
-							<a href="https://zbx1425.tk" target="_blank" class="text-muted" data-version="<?php echo VERSION; ?>">zbx1425</a> &mdash;&mdash;
+							<a href="https://www.zbx1425.cn" target="_blank" class="text-muted" data-version="<?php echo VERSION; ?>">zbx1425</a> &mdash;&mdash;
 						</div>
 					</div>
 				</div>
