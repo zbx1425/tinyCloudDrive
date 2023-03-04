@@ -1685,6 +1685,8 @@ if (isset($_GET['view'])) {
             <?php if(!$quickView) { ?>
                 <p class="break-word"><b><?php echo $view_title ?> "<?php echo fm_enc(fm_convert_win($file)) ?>"</b></p>
                 <p class="break-word">
+                    <?php $zbx_fileextlink = ($is_https ? 'https' : 'http') . '://' . $http_host .str_replace($_SERVER['DOCUMENT_ROOT'],"",$file_path); ?>
+					<strong>Link URI:</strong> <a href="<?php echo fm_enc($zbx_fileextlink) ?>"><?php echo fm_enc($zbx_fileextlink) ?></a><br>
                     <strong>Full path:</strong> <?php echo fm_enc(fm_convert_win($file_path)) ?><br>
                     <strong>File size:</strong> <?php echo ($filesize_raw <= 1000) ? "$filesize_raw bytes" : $filesize; ?><br>
                     <strong>MIME-type:</strong> <?php echo $mime_type ?><br>
